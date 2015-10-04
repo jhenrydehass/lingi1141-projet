@@ -153,6 +153,15 @@ void test_pkt_payload(void) {
         CU_ASSERT(pkt_set_payload(pkt, data, strlen(data)) == E_LENGTH);
         CU_ASSERT(pkt_get_length(pkt) != strlen(data));
         CU_ASSERT_STRING_NOT_EQUAL(pkt_get_payload(pkt), data);
+        
+        /*
+        * Fifth case : argument length does not correspond
+        * with the length of the data
+        */
+        CU_ASSERT(pkt_set_payload(pkt, "123", 1) == PKT_OK);
+        CU_ASSERT(pkt_get_length(pkt) == 1);
+        CU_ASSERT_STRING_EQUAL(pkt_get_payload(pkt), "1000");
+
 
         pkt_del(pkt);
 }
